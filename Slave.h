@@ -12,6 +12,7 @@ public:
 	int m_type;
 	Slave();
 	Slave(int addr, int type);
+	virtual int execute(int val);
 };
 
 

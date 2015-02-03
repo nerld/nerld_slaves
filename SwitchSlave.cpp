@@ -6,7 +6,7 @@ SwitchSlave::SwitchSlave(int addr) : Slave(addr, SWITCH), m_currentState(0)
 
 SwitchSlave::SwitchSlave() {}
 
-int SwitchSlave::toggle() {
+int SwitchSlave::execute(int val) {
 	Wire.requestFrom(m_address,1);
   while(Wire.available()) {
   	int state = Wire.read();

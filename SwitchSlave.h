@@ -13,7 +13,7 @@ public:
 	int m_currentState;
 	SwitchSlave();
 	SwitchSlave(int addr);
-	int toggle();
+	virtual int execute(int val);
 };
 
 
