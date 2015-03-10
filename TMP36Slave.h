@@ -14,6 +14,7 @@ public:
 	int m_delay;
 	TMP36Slave();
 	TMP36Slave(int addr);
+	virtual int execute(int val);
 };
 
 
