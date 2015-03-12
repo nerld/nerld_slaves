@@ -42,7 +42,7 @@ int NerldProtocol::requestFromSlave(int slaveAddress) {
 	return retVal;
 }
 
-int NerldProtocol::sendToSlave(int slaveAddress, int command, int val) {
+int NerldProtocol::sendCommandToSlave(int slaveAddress, int command, int val) {
 	char encMessage[128];
 	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {
 		wireTransmit(encMessage);
@@ -52,7 +52,7 @@ int NerldProtocol::sendToSlave(int slaveAddress, int command, int val) {
 	}
 }
 
-int NerldProtocol::sendToSlave(int slaveAddress, int command, float val) {
+int NerldProtocol::sendCommandToSlave(int slaveAddress, int command, float val) {
 	char encMessage[128];
 	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {
 		wireTransmit(encMessage);
@@ -62,7 +62,7 @@ int NerldProtocol::sendToSlave(int slaveAddress, int command, float val) {
 	}
 }
 
-int NerldProtocol::sendToBridge(int address, int command, int val) {
+int NerldProtocol::sendCommandToBridge(int address, int command, int val) {
 	if (m_port == NULL) {
 		return 1;
 	}

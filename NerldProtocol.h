@@ -18,11 +18,11 @@ public:
 
 	// Send to Slave Module Communication
 	int requestFromSlave(int slaveAddress);
-	int sendToSlave(int slaveAddress, int command, int val);
-	int sendToSlave(int slaveAddress, int command, float val);
+	int sendCommandToSlave(int slaveAddress, int command, int val);
+	int sendCommandToSlave(int slaveAddress, int command, float val);
 
 	// Send to Bridge (from Master only)
-	int sendToBridge(int address, int command, int val);
+	int sendCommandToBridge(int address, int command, int val);
 
 	// Message parsing
 	int receiveCommand(int numOfBytes, String * ouput);
