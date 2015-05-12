@@ -15,6 +15,7 @@ public:
 	int requestAddresssFromMaster();
 	int sendCommandToMaster(int slaveAddress, int command, int val);
 	int sendCommandToMaster(int slaveAddress, int command, float val);
+	int sendCommandToMaster(int slaveAddress, int command, String val);
 
 	// Send to Slave Module Communication
 	int requestFromSlave(int slaveAddress);
@@ -36,6 +37,7 @@ private:
 	// Encode Message
 	int encodeMessage(int address, int command, int value, char * output);
 	int encodeMessage(int address, int command, float value, char * output);
+	int encodeMessage(int address, int command, String value, char * output);
 
 	// Decode Message
 };

@@ -7,6 +7,7 @@ public:
 	BaseSlave(int addr);
 
 	int m_address;
+	int m_type;
 };
 
 #endif

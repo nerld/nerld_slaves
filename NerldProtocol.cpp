@@ -25,7 +25,17 @@ int NerldProtocol::sendCommandToMaster(int slaveAddress, int command, int val) {
 
 int NerldProtocol::sendCommandToMaster(int slaveAddress, int command, float val) {
 	char encMessage[128];
-	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {
+	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {		
+		wireTransmit(encMessage);
+		return 0;
+	} else {
+		return 1;
+	}
+}
+
+int NerldProtocol::sendCommandToMaster(int slaveAddress, int command, String val) {
+	char encMessage[128];
+	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {		
 		wireTransmit(encMessage);
 		return 0;
 	} else {
@@ -36,7 +46,7 @@ int NerldProtocol::sendCommandToMaster(int slaveAddress, int command, float val)
 int NerldProtocol::requestFromSlave(int slaveAddress) {
 	Wire.requestFrom(slaveAddress,1);
 	int retVal = NULL;
-  while(retVal == NULL && Wire.available()) {
+  while(Wire.available()) {
   	retVal = Wire.read();
   }
 	return retVal;
@@ -45,7 +55,9 @@ int NerldProtocol::requestFromSlave(int slaveAddress) {
 int NerldProtocol::sendCommandToSlave(int slaveAddress, int command, int val) {
 	char encMessage[128];
 	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {
-		wireTransmit(encMessage);
+		Wire.beginTransmission(slaveAddress);
+		Wire.write(encMessage);
+		Wire.endTransmission();
 		return 0;
 	} else {
 		return 1;
@@ -55,7 +67,9 @@ int NerldProtocol::sendCommandToSlave(int slaveAddress, int command, int val) {
 int NerldProtocol::sendCommandToSlave(int slaveAddress, int command, float val) {
 	char encMessage[128];
 	if (encodeMessage(slaveAddress, command, val, encMessage) == 0) {
-		wireTransmit(encMessage);
+		Wire.beginTransmission(slaveAddress);
+		Wire.write(encMessage);
+		Wire.endTransmission();
 		return 0;
 	} else {
 		return 1;
@@ -109,7 +123,14 @@ void NerldProtocol::wireTransmit(char * buffer) {
 int NerldProtocol::encodeMessage(int address, int command, int value, char * output) {
 	String message = "";
 	message = message + address + ":" + command + ":" + value;
-	message.toCharArray(output, 128);
+	message.toCharArray(output, 256);
+	return 0;
+}
+
+int NerldProtocol::encodeMessage(int address, int command, String value, char * output) {
+	String message = "";
+	message = message + address + ":" + command + ":" + value;
+	message.toCharArray(output, 256);
 	return 0;
 }
 
@@ -119,6 +140,8 @@ int NerldProtocol::encodeMessage(int address, int command, float value, char * o
 
 	String message = "";
 	message = message + address + ":" + command + ":" + floatBuffer;
-	message.toCharArray(output, 128);
+	message.toCharArray(output, 256);
 	return 0;
 }
+
+
